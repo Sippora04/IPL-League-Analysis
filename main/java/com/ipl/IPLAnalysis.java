@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import com.CSVBuilder.CSVBuilderException;
 import com.CSVBuilder.CSVBuilderFactory;
 import com.CSVBuilder.ICSVBuilder;
 
@@ -15,9 +14,9 @@ public class IPLAnalysis {
 	List<IPLBatting> runsCSVList = null;
 	List<IPLBowling> wicketsCSVList = null;
 	
-	private static <K> List <K> loadCSVData(String filepath, Class<K> csvClass) throws CSVBuilderException, IOException {
-		Reader reader = Files.newBufferedReader(Paths.get(filepath));
-		ICSVBuilder<K> csvBuilder = CSVBuilderFactory.createCSVBuilder();
+	private static <k> List<k> loadCSVData(String filePath, Class<k> csvClass) throws CSVBuilderException, IOException {
+		Reader reader = Files.newBufferedReader(Paths.get(filePath)); 
+		ICSVBuilder<k> csvBuilder = CSVBuilderFactory.createCSVBuilder();
 		return csvBuilder.getCSVFileList(reader, csvClass);
 	}
 	
@@ -33,11 +32,18 @@ public class IPLAnalysis {
 	
 	public double getTopBattingAvg(String filePath) throws CSVBuilderException, IOException {
 		loadRunsCSV(filePath);
-		double max = runsCSVList.stream().map(entry -> entry.average).max(Double::compare).get();
-		return max;
+		double maxBattingAvg = runsCSVList.stream().map(entry -> entry.average).max(Double::compare).get();
+		return maxBattingAvg;
+	}
+	
+	public double getTopStrikingRate(String filePath) throws CSVBuilderException, IOException {
+		loadRunsCSV(filePath);
+		double maxStrikingRate = runsCSVList.stream().map(entry -> entry.strikeRate).max(Double::compare).get();
+		return maxStrikingRate;
 	}
 	
 	public static void main(String[] args) {
 		System.out.println("*** Welcome to IPL League Analysis Problem ***");
 	}
+
 }
