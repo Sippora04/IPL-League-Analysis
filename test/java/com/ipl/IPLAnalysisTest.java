@@ -155,7 +155,7 @@ public class IPLAnalysisTest {
 		for (String j : bestAverage.keySet()) {
 			if (max == bestAverage.get(j)) {
 				System.out.println(
-						"Best player with average is : " + j + " with batting+bowling average : " + bestAverage.get(j));
+						"best player with average is : " + j + " with batting+bowling average : " + bestAverage.get(j));
 				bestAllRounder = j;
 			}
 		}
@@ -178,7 +178,7 @@ public class IPLAnalysisTest {
 		// printing best all rounder name on basis of points
 		for (String j : allRounderPoints.keySet()) {
 			if (max == allRounderPoints.get(j)) {
-				System.out.println("Best allrounder is : " + j + " with points " + allRounderPoints.get(j));
+				System.out.println("best allrounder is : " + j + " with points " + allRounderPoints.get(j));
 				bestAllRounder = j;
 			}
 		}
@@ -187,9 +187,8 @@ public class IPLAnalysisTest {
 
 	// UC15
 	@Test
-	public void givenCSVFilePath_ShouldReturnPlayerWitnMostHundredsAndBestAverage() throws IplAnalyzerException {
+	public void givenCSVFILEPATH_ShouldReturnPlayerWitnMostHundredsAndBestAverage() throws IplAnalyzerException {
 		iplAnalyzer.loadIplData(FILEPATH);
-		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
 		iplAnalyzer.getBatsmanNameWhoScoredHundreds();
 		HashMap<String, Double> batsmanWithHundreds = iplAnalyzer.getBatsmanWithHundredsAndBestAverage();
 		Double max = 0.0;
@@ -202,10 +201,36 @@ public class IPLAnalysisTest {
 		// printing batsman with hundred and best average
 		for (String j : batsmanWithHundreds.keySet()) {
 			if (max == batsmanWithHundreds.get(j)) {
-				System.out.println("best allrounder is : " + j + " with points " + batsmanWithHundreds.get(j));
+				System.out.println("batsman with hundred is : " + j + " with average " + batsmanWithHundreds.get(j));
 				batsmanWithHundredNBestAverage = j;
 			}
 		}
 		Assert.assertEquals("David Warner ", batsmanWithHundredNBestAverage);
 	}
+
+	// UC16
+	@Test
+	public void givenCSVFILEPATH_ShouldReturnPlayerWithZeroHundredsAndFifties_ButBestAverage()
+			throws IplAnalyzerException {
+		iplAnalyzer.loadIplData(FILEPATH);
+		HashMap<String, Double> batsmanWithNoHundredsNFifty = iplAnalyzer
+				.getBatsmanZeroHundredsAndFiftiesButBestAverage();
+		Double max = 0.0;
+		String batsmanWithNoHundredNFiftyButBestAverage = null;
+		// checking for maximum average
+		for (String i : batsmanWithNoHundredsNFifty.keySet()) {
+			if (max < batsmanWithNoHundredsNFifty.get(i))
+				max = batsmanWithNoHundredsNFifty.get(i);
+		}
+		// printing batsman with zero hundred and zero fifty but best average
+		for (String j : batsmanWithNoHundredsNFifty.keySet()) {
+			if (max == batsmanWithNoHundredsNFifty.get(j)) {
+				System.out.println("Batsman with no hundreds &  no fifites is : " + j + " with best average "
+						+ batsmanWithNoHundredsNFifty.get(j));
+				batsmanWithNoHundredNFiftyButBestAverage = j;
+			}
+		}
+		Assert.assertEquals("Marcus Stoinis", batsmanWithNoHundredNFiftyButBestAverage);
+	}
+
 }
