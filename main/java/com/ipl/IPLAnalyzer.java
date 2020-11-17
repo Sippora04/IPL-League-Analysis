@@ -175,4 +175,16 @@ public class IPLAnalyzer {
 		String sortedWicketsList = new Gson().toJson(listBowler);
 		return sortedWicketsList;
 	}
+
+	public String sortBowlerDataBestAveragesWithStrikeRate() {
+		Comparator<MostWicketsCSV> csvComparator = Comparator
+				.comparing(player -> Double.parseDouble(player.strikeRate));
+		Comparator<MostWicketsCSV> csvComparator1 = csvComparator
+				.thenComparing(player -> Double.parseDouble(player.average));
+		this.sortMostWicketsCSV(csvComparator1);
+		String sortedWicketsList = new Gson().toJson(listBowler);
+		return sortedWicketsList;
+
+	}
+
 }

@@ -114,4 +114,13 @@ public class IPLAnalysisTest {
 		Assert.assertEquals("16.81", mostWicketsCSV[0].strikeRate);
 	}
 
+	// UC11
+	@Test
+	public void givenCSVFilePath_ShouldReturnPalyersWithGreatBowlingAveragesWithBestStrikeRate() throws IplAnalyzerException {
+		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
+		String sortedData = iplAnalyzer.sortBowlerDataBestAveragesWithStrikeRate();
+		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
+		Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].playerName);
+		Assert.assertEquals("120", mostWicketsCSV[0].strikeRate);
+	}
 }
