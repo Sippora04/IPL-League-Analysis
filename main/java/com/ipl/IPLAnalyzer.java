@@ -249,7 +249,7 @@ public class IPLAnalyzer {
 			}
 			allRounderPoints.put(allrounder, points);
 		}
-		// printing allrounders with points
+		// printing allRounders with points
 		for (String s : allRounderPoints.keySet()) {
 			System.out.println("name is = " + s + "  and points are : " + allRounderPoints.get(s));
 		}
@@ -278,6 +278,37 @@ public class IPLAnalyzer {
 			System.out.println("name is = " + s + "  and averagePoints are : " + averagePoints.get(s));
 		}
 		return averagePoints;
+	}
+
+	public List<String> getBatsmanNameWhoScoredHundreds() {
+		List<String> listBatsmanWithHundreds = new ArrayList<String>();
+		for (int i = 0; i < list.size(); i++) {
+			if (Integer.parseInt(list.get(i).hundredsScored) > 0)
+				listBatsmanWithHundreds.add(list.get(i).playerName);
+		}
+		System.out.println("Batsman who scored hundreds are : ");
+		for (String name : listBatsmanWithHundreds) {
+			System.out.println(name);
+		}
+		return listBatsmanWithHundreds;
+	}
+
+	public HashMap<String, Double> getBatsmanWithHundredsAndBestAverage() {
+		List<String> batsmanWithHundreds = this.getBatsmanNameWhoScoredHundreds();
+		HashMap<String, Double> hundredList = new HashMap<String, Double>();
+		for (String batsman : batsmanWithHundreds) {
+			Double average = 0.0;
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).playerName == batsman)
+					average = Double.parseDouble(list.get(i).average);
+			}
+			hundredList.put(batsman, average);
+		}
+		// printing batsman with hundreds and average
+		for (String s : hundredList.keySet()) {
+			System.out.println("name is = " + s + "  and average is  : " + hundredList.get(s));
+		}
+		return hundredList;
 	}
 
 }
