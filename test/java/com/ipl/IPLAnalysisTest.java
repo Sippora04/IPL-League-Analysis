@@ -10,6 +10,7 @@ public class IPLAnalysisTest {
 
 	public static String FILEPATH = "C:\\Users\\sippo\\eclipse-workspace\\IPL\\WP DP Data_01 IPL2019FactsheetMostRuns.csv";
 	private IPLAnalyzer iplAnalyzer;
+
 	@Before
 	public void initialize() {
 		iplAnalyzer = new IPLAnalyzer();
@@ -31,17 +32,23 @@ public class IPLAnalysisTest {
 		MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedData, MostRunsCSV[].class);
 		Assert.assertEquals("Ishant Sharma", mostRunsCSV[0].playerName);
 		Assert.assertEquals("333.33", mostRunsCSV[0].strikeRate);
-
 	}
 
 	@Test
-	public void givenCSVFILEPATH_ShouldReturnPlayerWithMostSixesAndFours() throws IplAnalyzerException {
+	public void givenCSVFILEPATH_ShouldReturnPlayerWithMostSixesNFours() throws IplAnalyzerException {
 		iplAnalyzer.loadIplData(FILEPATH);
 		String sortedData = iplAnalyzer.sortBatsmanDataOnBoundaries();
 		MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedData, MostRunsCSV[].class);
 		Assert.assertEquals("Andre Russell", mostRunsCSV[0].playerName);
 		Assert.assertEquals(83, mostRunsCSV[0].foursCollected + mostRunsCSV[0].sixesCollected);
+	}
 
+	@Test
+	public void givenCSVFILEPATH_ShouldReturnPlayerWithBestStrikeAndBoundaries() throws IplAnalyzerException {
+		iplAnalyzer.loadIplData(FILEPATH);
+		String sortedData = iplAnalyzer.sortBatsmanDataOnBoundariesThenStrikeRate();
+		MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedData, MostRunsCSV[].class);
+		Assert.assertEquals("Andre Russell", mostRunsCSV[0].playerName);
 	}
 
 }
