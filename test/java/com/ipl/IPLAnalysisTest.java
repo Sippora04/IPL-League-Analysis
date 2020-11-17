@@ -103,4 +103,15 @@ public class IPLAnalysisTest {
 		Assert.assertEquals("Shivam Dube", mostWicketsCSV[0].playerName);
 		Assert.assertEquals("4.8", mostWicketsCSV[0].economy);
 	}
+	
+	// UC10
+	@Test
+	public void givenCSVFilePath_ShouldReturnPalyersWithBestStrikeWithFiveAndfourwicket() throws IplAnalyzerException {
+		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
+		String sortedData = iplAnalyzer.sortBowlerDataBestStrikeRateWithFiveAndFourWicketHauls();
+		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
+		Assert.assertEquals("Lasith Malinga", mostWicketsCSV[0].playerName);
+		Assert.assertEquals("16.81", mostWicketsCSV[0].strikeRate);
+	}
+
 }
