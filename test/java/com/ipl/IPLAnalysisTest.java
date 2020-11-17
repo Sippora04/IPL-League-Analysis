@@ -35,7 +35,7 @@ public class IPLAnalysisTest {
 	}
 
 	@Test
-	public void givenCSVFILEPATH_ShouldReturnPlayerWithMostSixesNFours() throws IplAnalyzerException {
+	public void givenCSVFILEPATH_ShouldReturnPlayerWithMostSixesAndFours() throws IplAnalyzerException {
 		iplAnalyzer.loadIplData(FILEPATH);
 		String sortedData = iplAnalyzer.sortBatsmanDataOnBoundaries();
 		MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedData, MostRunsCSV[].class);
@@ -51,4 +51,11 @@ public class IPLAnalysisTest {
 		Assert.assertEquals("Andre Russell", mostRunsCSV[0].playerName);
 	}
 
+	@Test
+	public void givenCSVFilePath_ShouldReturnPlayerWithBestAverageWithStrikeRate() throws IplAnalyzerException {
+		iplAnalyzer.loadIplData(FILEPATH);
+		String sortedData = iplAnalyzer.sortBatsmanDataOnStrikeRateThenAverage();
+		MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedData, MostRunsCSV[].class);
+		Assert.assertEquals("Ishant Sharma", mostRunsCSV[0].playerName);
+	}
 }

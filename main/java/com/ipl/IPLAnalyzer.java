@@ -85,4 +85,15 @@ public class IPLAnalyzer {
 		String sortedRunsList = new Gson().toJson(list);
 		return sortedRunsList;
 	}
+
+	public String sortBatsmanDataOnStrikeRateThenAverage() {
+		Comparator<MostRunsCSV> csvComparator1 = Comparator.comparing(player -> Double.parseDouble(player.strikeRate));
+		Comparator<MostRunsCSV> csvComparator2 = csvComparator1
+				.thenComparing(player -> Double.parseDouble(player.average));
+		this.sortMostRunsCSV(csvComparator2);
+		String sortedRunsList = new Gson().toJson(list);
+		return sortedRunsList;
+
+	}
+
 }
