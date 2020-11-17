@@ -175,5 +175,4 @@ public class IPLAnalyzer {
 		String sortedWicketsList = new Gson().toJson(listBowler);
 		return sortedWicketsList;
 	}
-
 }
