@@ -1,5 +1,7 @@
 package com.ipl;
 
+import java.util.HashMap;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,6 +84,7 @@ public class IPLAnalysisTest {
 		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
 		Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].playerName);
 		Assert.assertEquals("166", mostWicketsCSV[0].average);
+
 	}
 
 	// UC8
@@ -93,20 +96,20 @@ public class IPLAnalysisTest {
 		Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].playerName);
 		Assert.assertEquals("120", mostWicketsCSV[0].strikeRate);
 	}
-	
-	//UC9
+
+	// UC9
 	@Test
-	public void givenCSVFilePath_ShouldReturnPalyersWithBestEconomy() throws IplAnalyzerException {
+	public void givenCSVFILEPATH_ShouldReturnPalyersWithBestEconomy() throws IplAnalyzerException {
 		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
 		String sortedData = iplAnalyzer.sortBowlerDataOnEconomy();
 		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
 		Assert.assertEquals("Shivam Dube", mostWicketsCSV[0].playerName);
 		Assert.assertEquals("4.8", mostWicketsCSV[0].economy);
 	}
-	
+
 	// UC10
 	@Test
-	public void givenCSVFilePath_ShouldReturnPalyersWithBestStrikeWithFiveAndfourwicket() throws IplAnalyzerException {
+	public void givenCSVFILEPATH_ShouldReturnPalyersWithBestStrikeWithFiveAndfourwicket() throws IplAnalyzerException {
 		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
 		String sortedData = iplAnalyzer.sortBowlerDataBestStrikeRateWithFiveAndFourWicketHauls();
 		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
@@ -116,11 +119,70 @@ public class IPLAnalysisTest {
 
 	// UC11
 	@Test
-	public void givenCSVFilePath_ShouldReturnPalyersWithGreatBowlingAveragesWithBestStrikeRate() throws IplAnalyzerException {
+	public void givenCSVFILEPATH_ShouldReturnPalyersWithGreatBowlingAveragesWithBestStrikeRate()
+			throws IplAnalyzerException {
 		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
 		String sortedData = iplAnalyzer.sortBowlerDataBestAveragesWithStrikeRate();
 		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
 		Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].playerName);
 		Assert.assertEquals("120", mostWicketsCSV[0].strikeRate);
 	}
+
+	// UC12
+	@Test
+	public void givenCSVFILEPATH_ShouldReturnPalyersWithMaximumWicketsWithBestAverage() throws IplAnalyzerException {
+		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
+		String sortedData = iplAnalyzer.sortBowlerWithMaximumWicketsWithBestAverage();
+		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
+		Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].playerName);
+		Assert.assertEquals("1", mostWicketsCSV[0].wicketsTaken);
+	}
+
+	// UC13
+	@Test
+	public void givenCSVFILEPATH_ShouldReturnPlayerWithBestBattingAndBowlingAverage() throws IplAnalyzerException {
+		iplAnalyzer.loadIplData(FILEPATH);
+		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
+		HashMap<String, Double> bestAverage = iplAnalyzer.getAveragePoints();
+		Double max = 0.0;
+		String bestAllRounder = null;
+		// checking for maximum average points
+		for (String i : bestAverage.keySet()) {
+			if (max < bestAverage.get(i))
+				max = bestAverage.get(i);
+		}
+		// printing best all rounder name on basis of average points
+		for (String j : bestAverage.keySet()) {
+			if (max == bestAverage.get(j)) {
+				System.out.println(
+						"Best player with average is : " + j + " with batting+bowling average : " + bestAverage.get(j));
+				bestAllRounder = j;
+			}
+		}
+		Assert.assertEquals("Krishnappa Gowtham", bestAllRounder);
+	}
+
+	// UC14
+	@Test
+	public void givenCSVFILEPATH_ShouldReturnBestAllRounder() throws IplAnalyzerException {
+		iplAnalyzer.loadIplData(FILEPATH);
+		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
+		HashMap<String, Double> allRounderPoints = iplAnalyzer.getAllRounderPoints();
+		Double max = 0.0;
+		String bestAllRounder = null;
+		// checking for maximum points
+		for (String i : allRounderPoints.keySet()) {
+			if (max < allRounderPoints.get(i))
+				max = allRounderPoints.get(i);
+		}
+		// printing best all rounder name on basis of points
+		for (String j : allRounderPoints.keySet()) {
+			if (max == allRounderPoints.get(j)) {
+				System.out.println("Best allrounder is : " + j + " with points " + allRounderPoints.get(j));
+				bestAllRounder = j;
+			}
+		}
+		Assert.assertEquals("Andre Russell", bestAllRounder);
+	}
+
 }
