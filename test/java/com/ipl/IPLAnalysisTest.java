@@ -82,7 +82,15 @@ public class IPLAnalysisTest {
 		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
 		Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].playerName);
 		Assert.assertEquals("166", mostWicketsCSV[0].average);
-
 	}
 
+	// UC8
+	@Test
+	public void givenCSVFILEPATH_ShouldReturnPalyersWithTopStrikingRates() throws IplAnalyzerException {
+		iplAnalyzer.loadIplDataBowler(FILEPATHBOWLER);
+		String sortedData = iplAnalyzer.sortBowlerDataOnTopStrikingRates();
+		MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedData, MostWicketsCSV[].class);
+		Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].playerName);
+		Assert.assertEquals("120", mostWicketsCSV[0].strikeRate);
+	}
 }
